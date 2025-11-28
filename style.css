@@ -1,0 +1,259 @@
+:root {
+    /* Farben: Tafel-Grün, Kreide-Weiß, Weihnachts-Rot, Gold */
+    --bg-primary: #2F4F4F;      /* Dunkles Schiefergrau/Grün (Tafel) */
+    --bg-secondary: #243d3d;    /* Etwas dunkler für Muster */
+    
+    --door-bg: #E74C3C;         /* Ein schönes, mattes Weihnachtsrot */
+    --door-hover: #C0392B;      /* Dunkleres Rot beim Drüberfahren */
+    
+    --accent-color: #F1C40F;    /* Gold/Gelb für Sterne und Wichtiges */
+    --text-primary: #FFFFFF;    /* Weiß wie Kreide */
+    --text-secondary: #D1D5DB;  /* Leichtes Grau */
+    
+    /* Verspielte, kindgerechte Fonts */
+    --font-heading: 'Fredoka', sans-serif;  
+    --font-body: 'Patrick Hand', cursive;    
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    margin: 0;
+    padding: 20px;
+    
+    /* Karopapier-Muster im Hintergrund */
+    background-image: 
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-top: 20px;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+}
+
+.logo-icon {
+    font-size: 4em;
+    margin-bottom: 5px;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+    animation: float 3s ease-in-out infinite;
+    cursor: default;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+h1 {
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+    font-size: 3em;
+    margin: 0;
+    letter-spacing: 1px;
+    line-height: 1.2;
+}
+
+h1 span {
+    color: var(--door-bg);
+}
+
+.subtitle {
+    font-family: var(--font-body);
+    font-size: 1.5em;
+    color: var(--accent-color);
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+#calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 25px;
+    max-width: 1100px;
+    margin: 0 auto 60px auto;
+}
+
+.advent-door {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 130px;
+    background-color: var(--door-bg);
+    border: 4px solid #fff;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 3em;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 8px 0 rgba(0,0,0,0.2);
+    cursor: not-allowed;
+    opacity: 0.6;
+    position: relative;
+    overflow: hidden;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+    user-select: none;
+}
+
+.advent-door.locked::before {
+    content: "🔒";
+    font-size: 0.4em;
+    position: absolute;
+    top: 10px; right: 10px;
+    opacity: 0.8;
+}
+
+.advent-door::after {
+    content: "";
+    position: absolute;
+    width: 150%; height: 150%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 10%, transparent 10%);
+    background-size: 20px 20px;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.advent-door.active {
+    background-color: var(--door-bg); 
+    cursor: pointer;
+    opacity: 1;
+    border-color: #fff;
+}
+
+.advent-door.active:hover {
+    transform: translateY(-8px) scale(1.02);
+    background-color: var(--door-hover);
+    box-shadow: 0 15px 0 rgba(0,0,0,0.15);
+}
+
+.advent-door.active:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+}
+
+#riddle-modal {
+    display: none; 
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(47, 79, 79, 0.95);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: #fff;
+    color: #333;
+    border: 8px solid var(--accent-color);
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 85vh; 
+    overflow-y: auto;
+    text-align: center;
+    position: relative;
+    border-radius: 30px; 
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    background-image: 
+        linear-gradient(#e0e0e0 1px, transparent 1px),
+        linear-gradient(90deg, #e0e0e0 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+h2#modal-title {
+    color: var(--door-bg);
+    font-family: var(--font-heading);
+    font-size: 2.2em;
+    margin-top: 0;
+    text-transform: none; 
+    border-bottom: 3px dashed var(--accent-color);
+    padding-bottom: 15px;
+}
+
+.riddle-img {
+    width: 100%; height: auto; max-height: 250px;
+    object-fit: contain; 
+    margin: 10px 0;
+    display: none; 
+    border-radius: 15px;
+}
+.riddle-img[src^="images/"] { display: block; }
+
+#modal-text {
+    font-size: 1.5em;
+    font-family: var(--font-body);
+    margin: 20px 0;
+    line-height: 1.4;
+    color: #2c3e50;
+}
+
+#modal-result {
+    margin-top: 25px; padding-top: 20px; 
+    border-top: 3px dashed #ccc;
+    background: rgba(255, 248, 220, 0.5);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+#modal-answer {
+    color: var(--bg-primary);
+    font-family: var(--font-heading);
+    font-size: 1.8em; font-weight: 800;
+    margin-bottom: 10px;
+}
+
+#modal-explanation {
+    font-family: var(--font-body);
+    font-size: 1.3em;
+    text-align: left;
+    color: #555;
+    background: none;
+    padding: 0;
+    border: none;
+}
+
+button {
+    background-color: var(--accent-color);
+    border: none;
+    border-bottom: 5px solid #d4ac0d;
+    color: #fff;
+    padding: 15px 40px;
+    font-family: var(--font-heading);
+    font-size: 1.3em; cursor: pointer;
+    margin-top: 20px; transition: all 0.1s;
+    font-weight: 700;
+    border-radius: 50px;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+}
+
+button:hover {
+    transform: translateY(2px);
+    border-bottom: 2px solid #d4ac0d;
+}
+
+.close-btn {
+    position: absolute; top: 15px; right: 25px;
+    color: #aaa; font-size: 40px;
+    cursor: pointer; line-height: 0.8;
+    transition: 0.2s;
+    font-family: var(--font-heading);
+    font-weight: bold;
+}
+.close-btn:hover { color: var(--door-bg); transform: scale(1.1); }
+
+@media (max-width: 600px) {
+    #calendar-grid { grid-template-columns: repeat(3, 1fr); gap: 15px; }
+    .advent-door { height: 100px; font-size: 2em; border-width: 3px;}
+    h1 { font-size: 2em; }
+    .modal-content { padding: 20px; width: 85%; }
+}
