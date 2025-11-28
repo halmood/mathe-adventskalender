@@ -217,7 +217,7 @@ const currentMonth = now.getMonth() + 1; // JavaScript Monate sind 0-basiert (Ja
 // --- WICHTIG: Test-Modus ---
 // Setze testMode auf true, um alle Türchen sofort öffnen zu können (zum Testen).
 // Setze es auf false, damit der Kalender "echt" funktioniert (nur im Dezember, Tag für Tag).
-const testMode = false; 
+const testMode = true; 
 
 // Türchen generieren
 calendarData.forEach(item => {
