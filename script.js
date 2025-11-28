@@ -210,7 +210,7 @@ const currentMonth = now.getMonth() + 1; // JS Monate sind 0-basiert
 // WICHTIG: Test-Modus
 // Setze testMode auf true, um alle Türchen sofort öffnen zu können (zum Testen).
 // Setze es auf false, damit der Kalender "echt" funktioniert (nur ab 1. Dez).
-const testMode = true; 
+const testMode = false; 
 
 calendarData.forEach(item => {
     const door = document.createElement('div');
@@ -254,16 +254,14 @@ function openDoor(data) {
     document.getElementById('modal-answer').innerText = data.answer;
     document.getElementById('modal-explanation').innerHTML = data.explanation;
     
-    // Bilder zurücksetzen
+    // BILD LOGIK:
     const imgEl = document.getElementById('modal-img');
-    imgEl.src = "";
-    imgEl.style.display = 'none';
-
-    // Bild Logik (optional)
-    if (data.image) {
-        imgEl.src = data.image;
-        imgEl.style.display = 'block';
-    }
+    
+    // Hier wird der Pfad automatisch erstellt: "images/tag1.png", "images/tag2.png" etc.
+    const imagePath = `images/tag${data.day}.png`;
+    
+    imgEl.src = imagePath;
+    imgEl.style.display = 'block'; // Bild anzeigen
 
     // Buttons zurücksetzen
     modalResult.style.display = 'none';
